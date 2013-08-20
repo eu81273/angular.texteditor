@@ -14,87 +14,75 @@
         div[ng-app] {
             padding: 20px;
         }
-
         div[contenteditable] {
-        	display: block;
-        	background-color: #f0f0f0;
-        	padding: 10px;
-        	outline-style: none;
-        	height: 200px;
-        	margin: 10px 0 50px 0;
-        	overflow-y: auto;
-
-        	font-size: 12px !important;
-        	line-height: 20px !important;
-        	
-        	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	-webkit-transition: border linear .2s, box-shadow linear .2s;
-        	-moz-transition: border linear .2s, box-shadow linear .2s;
-        	-o-transition: border linear .2s, box-shadow linear .2s;
-        	transition: border linear .2s, box-shadow linear .2s;
+            display: block;
+            background-color: #f0f0f0;
+            padding: 10px;
+            outline-style: none;
+            height: 200px;
+            margin: 10px 0 50px 0;
+            overflow-y: auto;
+            font-size: 12px !important;
+            line-height: 20px !important;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border linear .2s, box-shadow linear .2s;
+            -moz-transition: border linear .2s, box-shadow linear .2s;
+            -o-transition: border linear .2s, box-shadow linear .2s;
+            transition: border linear .2s, box-shadow linear .2s;
         }
-
-
-
         textarea, pre {
-        	width:100%;
-        	-webkit-box-sizing: border-box;
-        	-moz-box-sizing: border-box;
-        	box-sizing: border-box;
-        	background-color: #f0f0f0;
-        	border: none;
-        	border-radius: 0;
-        	padding: 10px;
-        	outline-style: none;
-        	height: 250px;
-        	margin: 10px 0 20px 0;
-        	overflow-y: auto;
-        	
-        	font-size: 12px !important;
-        	line-height: 20px !important;
-        	
-        	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-        	-webkit-transition: border linear .2s, box-shadow linear .2s;
-        	-moz-transition: border linear .2s, box-shadow linear .2s;
-        	-o-transition: border linear .2s, box-shadow linear .2s;
-        	transition: border linear .2s, box-shadow linear .2s;
+            width:100%;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 0;
+            padding: 10px;
+            outline-style: none;
+            height: 250px;
+            margin: 10px 0 20px 0;
+            overflow-y: auto;
+            font-size: 12px !important;
+            line-height: 20px !important;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+            -webkit-transition: border linear .2s, box-shadow linear .2s;
+            -moz-transition: border linear .2s, box-shadow linear .2s;
+            -o-transition: border linear .2s, box-shadow linear .2s;
+            transition: border linear .2s, box-shadow linear .2s;
         }
-
         button {
-        	font-size: 12px !important;
-        	font-weight: bold;
+            font-size: 12px !important;
+            font-weight: bold;
         }
-
         blockquote {
-        	margin-top: 20px;
-        	margin-bottom: 0;
+            margin-top: 20px;
+            margin-bottom: 0;
         }
-
         /* IE + Others */
+         div[contenteditable] p {
+            margin: 0;
+        }
         div[contenteditable] blockquote {
-        	border-left: none;
-        	font-size: inherit;
-        	font-weight: normal;
-        	margin-top: 0;
+            border-left: none;
+            font-size: inherit;
+            font-weight: normal;
+            padding: 0;
+            margin: 0 0 0 30px;
         }
-
         /* IE */
-        div[contenteditable] blockquote p {
-        	border-left: none;
-        	font-size: inherit;
-        	font-weight: normal;
-        	line-height: 30px;
-        	margin-top: -5px;
-        	margin-bottom: 5px;
-        	margin-left: 30px;
+         div[contenteditable] blockquote p {
+            border-left: none;
+            font-size: inherit;
+            font-weight: normal;
+            line-height: 20px;
         }
-
         div[contenteditable] ul, div[contenteditable] ol {
-        	margin-left: 60px;
+            margin: 0 0 0 60px;
         }
 
 	</style>
@@ -105,186 +93,314 @@
 
 angular.module('directive', [])
 
-	.directive('contenteditable', function () {
-		return {
-			require: 'ngModel',
-			link: function (scope, elm, attrs, ctrl) {
-					
-				//초기화
-				scope.init = function () {
-						//결과 출력
-						scope.convert("");
-						
-						//에디터 초기화
-						elm.html(null);
-						
-						//safeApply
-						scope.updateModel();
-				}
-				
-				//내용 반영
-				scope.updateModel = function () {
+.directive('contenteditable', function () {
+    return {
+        require: 'ngModel',
+        link: function (scope, elm, attrs, ctrl) {
 
-						//현재 적용 단계								
-						var phase = scope.$$phase;
-						
-						//실행할 함수
-						var fn = function () {
+            //편집 영역
+            var contentEditor = document.getElementById('contentEditor');
 
-								//결과 출력
-								scope.convert(elm.html().toString());
+            //IE 브라우저 체크
+            var internetExplorer = navigator.userAgent.toLowerCase().indexOf("msie") != -1 ? true : false;
+            
+            //초기화 메서드
+            scope.init = function () {
 
-								//뷰에 반영
-								ctrl.$setViewValue(elm.html());
-						};
-						
-						//safeApply
-						if(phase == '$apply' || phase == '$digest') {
-								if(fn && (typeof(fn) === 'function')) {
-										fn();
-								}
-						} else {
-								scope.$apply(fn);
-						}
-				};
+                if( !internetExplorer ){
 
-				//키보드 입력 이벤트
-				elm.unbind('keyup').bind('keyup', scope.updateModel);
-			}
-		};
-    })
-    .controller('ctrl', function ($scope) {
-		var contentEditor = document.getElementById('contentEditor');
-		
-		//포맷 변환
-		$scope.convert = function (str) {
-				
-			//\n 처리
-			str = str.replace(/\n/gi, "");
-			
-			//예외처리
-			str = str.replace(/<span[^<>]*?>/gi, "");
-			str = str.replace(/<\/span>/gi, "");
-			str = str.replace(/<font[^<>]*?>/gi, "");
-			str = str.replace(/<\/font>/gi, "");
-			str = str.replace(/<p>|<p [^<>]*?>/gi, "");
-			str = str.replace(/<\/p>/gi, "<p>\n"); //IE의 특성을 고려해 <p>로 행을 시작하므로 끝에 <p>를 붙인다.
-			str = str.replace(/<o:p>/gi, "");
-			str = str.replace(/<\/o:p>/gi, "");
-			str = str.replace(/<blockquote[^<>]*?><\/blockquote>/gi, "");
+                    //IE와 호환성을 위해 P를 기본으로
+                    document.execCommand('defaultParagraphSeparator', false, 'p');
+                }
 
-			//&nbsp;처리
-			str = str.replace(/&nbsp;/gi, " ");
-			
-			//<H?> 처리
-			str = str.replace(/<h[0-9]+>|<h[0-9]+ [^<>]*?>/gi, "");
-			str = str.replace(/<\/h[0-9]+>/gi, "<p>\n");
 
-			//<p> 처리
-			str = str.replace(/<div[^<>]*?>/gi, "<p>\n"); //크롬 특성상 <div><br></div> 로 개형되므로 앞에 <p>를 붙임.
-			str = str.replace(/<br>/gi, "");
-			str = str.replace(/<\/div>/gi, "");
+                //에디터 초기화
+                elm.html('<p>&nbsp;</p>');
 
-			//<p><p> 처리
-			str = str.replace(/<p>[\n| ]*<p>/gi, "<P>\n");
+                //모델 업데이트
+                scope.updateModel();
+               
+                //키보드 입력 이벤트 -> 누를때마다 모델 업데이트 호출
+                elm.unbind('keyup').bind('keyup', scope.updateModel);
 
-			//<b>처리
-			str = str.replace(/<b>|<strong>/gi, "<B>");
-			str = str.replace(/<\/b>|<\/strong>/gi, "</D>");
+                //붙여넣기 이벤트 -> 붙여넣으면 모델 업데이트 호출
+                elm.unbind('paste').bind('paste', scope.validateFormat);
+                
+                //커서 날리기 -> 크롬 버그로 인해서 커서가 있으면 다른 곳에 포커스됨.
+                contentEditor.blur();
+            }
+            
+            //모델 업데이트 메서드
+            scope.updateModel = function () {
 
-			//<i>처리
-			str = str.replace(/<i>|<em>/gi, "<I>");
-			str = str.replace(/<\/i>|<\/em>/gi, "</D>");
-			
-			//<sup>처리
-			str = str.replace(/<sup>/gi, "<207>");
-			str = str.replace(/<\/sup>/gi, "</190>");
-			
-			//<sub>처리
-			str = str.replace(/<sub>/gi, "<209>");
-			str = str.replace(/<\/sub>/gi, "</190>");
-			
-			//<ul, ol>처리
-			str = str.replace(/<li>/gi, "\n	<li>");
-			str = str.replace(/<\/li>/gi, "");
-			str = str.replace(/<\/ul>/gi, "</li>\n</ul>\n");
-			str = str.replace(/<\/ol>/gi, "</li>\n</ol>\n");
-			
-			//<blockquote> 처리
-			str = str.replace(/<blockquote[^<>]*?>[<p>|]*/gi, "<div style=\"margin-left:20px\">");
-			str = str.replace(/<\/blockquote>/gi, "</div>\n");
+                //현재 적용 단계 구하기        
+                var phase = scope.$$phase;
+                
+                //실행할 함수
+                var fn = function () {
 
-			$scope.converted = str;
-		};
+                    //커스텀 포맷 호출
+                    scope.customizedFormat(elm.html().toString());
 
-		//포맷 적용
-		$scope.setFormat = function (sCmd, sValue) {
-				
-			//포맷 적용
-			if( sValue && sValue.length ) {
-					document.execCommand(sCmd, false, sValue);		
-			}
-			else {
-					document.execCommand(sCmd);
-			}
-			
-			
-			//blockquote 제거 - 크롬 버그
-			var blockquotes = angular.element(contentEditor).find('blockquote');
-			for(var i=0, item; item = blockquotes[i]; i++){
-					if( !item.innerHTML.length ){
-							angular.element(item).remove();
-					}
-			}
-			
-			//safeApply
-			$scope.updateModel();
-			
-			//포커스 적용
-			contentEditor.focus();
-		};
-    });
+                    //뷰에 반영
+                    ctrl.$setViewValue(elm.html());
+
+                    //포커스
+                    contentEditor.focus();
+
+                };
+                
+                //이미 적용 중이면,
+                if(phase == '$apply' || phase == '$digest') {
+
+                    fn();
+                } 
+
+                //아직 적용 전이면,
+                else {
+
+                    scope.$apply(fn);
+                }
+            };
+
+
+            //초기화
+            scope.init();
+        }
+    };
+})
+.controller('ctrl', function ($scope) {
+
+    //변수 선언
+    $scope.contentEditor = document.getElementById('contentEditor');
+    $scope.contentViewer = document.getElementById('contentViewer');
+    
+
+    //커스텀 포맷 메서드 -> 모델 업데이트에서 호출
+    $scope.customizedFormat = function (str) {
+
+        /* 타이핑을 해서 나올 수 있는 태그들은 모두 처리가 있어야 한다. */
+        
+        //\n 를 제거
+        str = str.replace(/\n/gi, "");
+        
+        //<font> 제거
+        //str = str.replace(/<font[^<>]*?>/gi, "");
+        //str = str.replace(/<\/font>/gi, "");
+        
+        //<span>을 제거 -> 교정에서 제거하므로 불필요
+        //str = str.replace(/<span[^<>]*?>/gi, "");
+        //str = str.replace(/<\/span>/gi, "");
+        
+        //<o:p> 제거
+        str = str.replace(/<o:p>/gi, "");
+        str = str.replace(/<\/o:p>/gi, "");
+
+        //&nbsp; 를 스페이스로 변환
+        str = str.replace(/&nbsp;/gi, " ");
+        
+        //<p> 를 <p> 로 변환
+        str = str.replace(/<p>|<p [^<>]*?>/gi, "");
+        str = str.replace(/<\/p>/gi, "<p>\n"); //IE의 특성을 고려해 <p>로 행을 시작하므로 끝에 <p>를 붙인다.
+        
+        //<H?> 를 <p>로 변환
+        str = str.replace(/<h[0-9]+>|<h[0-9]+ [^<>]*?>/gi, "");
+        str = str.replace(/<\/h[0-9]+>/gi, "<p>\n");
+        
+        //<br><div> 에서 <br> 제거 -> 교정에서 제거하므로 불필요
+        //str = str.replace(/<br><div>/gi, "<div>");
+        
+        //<div><br></div>를 <p>로 변환 -> 교정에서 제거하므로 불필요
+        //str = str.replace(/<div><br><\/div>/gi, "<p>\n");
+        
+        //<div> 를 <p>로 변환
+        str = str.replace(/<div[^<>]*?>/gi, "<p>\n"); //크롬 특성상 <div><br></div> 로 개형되므로 앞에 <p>를 붙임.
+        str = str.replace(/<\/div>/gi, "");
+        
+        //<br>을 <p>로 변환 -> 교정에서 제거하므로 불필요 -> 제거 안하고 표시만 안하기로!!!
+        str = str.replace(/<br>/gi, "<p>\n");
+
+        //<p><p> 를 대문자 <P> 로 변환
+        str = str.replace(/<p>[\n| ]*<p>/gi, "<P>\n");
+        
+        
+        
+        
+        //<b> 처리
+        str = str.replace(/<b>|<strong>/gi, "<B>");
+        str = str.replace(/<\/b>|<\/strong>/gi, "</D>");
+
+        //<i> 처리
+        str = str.replace(/<i>|<em>/gi, "<I>");
+        str = str.replace(/<\/i>|<\/em>/gi, "</D>");
+        
+        //<sup>처리
+        str = str.replace(/<sup>/gi, "<207>");
+        str = str.replace(/<\/sup>/gi, "</190>");
+        
+        //<sub>처리
+        str = str.replace(/<sub>/gi, "<209>");
+        str = str.replace(/<\/sub>/gi, "</190>");
+        
+        //<ul, ol>처리
+        str = str.replace(/<li>/gi, "\n  <li>");
+        str = str.replace(/<\/li>/gi, "");
+        str = str.replace(/<\/ul>/gi, "</li>\n</ul>\n");
+        str = str.replace(/<\/ol>/gi, "</li>\n</ol>\n");
+        
+        //<blockquote> 를 <div> 로 변환
+        str = str.replace(/<blockquote[^<>]*?>[<p>|]*/gi, "<div style=\"margin-left:20px\">");
+        str = str.replace(/<\/blockquote>/gi, "</div>\n");
+        
+        //변환된 컨텐츠를 뷰어에 표시
+        $scope.customized = str;
+        
+        //뷰어 자동 스크롤
+        $scope.contentViewer.scrollTop = $scope.contentEditor.scrollTop;
+        
+    };
+
+    //포맷 적용 메서드 -> 포맷 적용 후 포맷 교정 호출
+    $scope.setFormat = function (sCmd, sValue) {
+        
+        //포맷 적용
+        if( sValue && sValue.length ) {
+            document.execCommand(sCmd, false, sValue);  
+        }
+        else {
+            document.execCommand(sCmd);
+        }
+
+        //포맷 교정 호출
+        $scope.validateFormat();
+    };
+    
+
+    //태그 교정 메서드 -> 포맷 적용 및 붙여넣기에서 호출 -> 마친 후 모델 업데이트 호출
+    $scope.validateFormat = function () {
+
+        /* 붙여넣기나 포맷 적용을 해서 나올 수 있는 태그들은 모두 처리가 있어야 한다. */
+        
+        //빈 blockquote 및 스타일 제거 - 크롬 버그
+        var blockquotes = angular.element($scope.contentEditor).find('blockquote');
+        for(var i=0, item; item = blockquotes[i]; i++){
+            if( !item.innerHTML.length ){
+                angular.element(item).remove();
+            }
+            else {
+                angular.element(item).removeAttr('style');
+            }
+        }
+        
+        //style 속성 제거
+        var style = $scope.contentEditor.querySelectorAll('[style]');
+        for(var i=0, item; item = style[i]; i++){
+            angular.element(item).removeAttr('style')
+        }
+        
+        //dir 속성 제거
+        var dir = $scope.contentEditor.querySelectorAll('[dir]');
+        for(var i=0, item; item = dir[i]; i++){
+            angular.element(item).removeAttr('dir')
+        }
+
+  
+        //span 을 p로 변경
+        angular.element($scope.contentEditor).find('span').replaceWith(function(){
+            return angular.element("<p>").append(angular.element(this).contents());
+        });
+
+        //font 제거
+        angular.element($scope.contentEditor).find('font').replaceWith(function(){
+            return angular.element(this).contents();
+        });
+
+        //pre 를 p로 변경
+        angular.element($scope.contentEditor).find('pre').replaceWith(function(){
+            return angular.element("<p>").append(angular.element(this).contents());
+        });
+
+        //br 제거
+        angular.element($scope.contentEditor).find('br').remove();  
+
+        //빈 p 에 &nbsp; 추가
+        var ps = angular.element($scope.contentEditor).find('p');
+        for(var i=0, item; item = ps[i]; i++){
+            if( !item.innerHTML.length ){
+                item.innerHTML = "&nbsp;";
+            }
+        }
+
+/*          
+        //div 을 p로 변경
+        angular.element($scope.contentEditor).find('div').replaceWith(function(){
+            return angular.element("<p>").append(angular.element(this).contents());
+        });
+        
+
+*/    
+
+        //모델 업데이트
+        $scope.updateModel();
+    };
+    
+});
 </script>
 </head>
 <body>
-	<div ng-app="directive" ng-controller="ctrl"> 
-		<div>
-			<div class="btn-group">
-				<button class="btn btn-primary" ng-click="setFormat('bold');"><i class="icon-bold icon-white"></i> 굵게</button>
-				<button class="btn btn-primary" ng-click="setFormat('italic');"><i class="icon-italic icon-white"></i> 이탤릭</button>
-				<button class="btn btn-primary" ng-click="setFormat('superscript');"><i class="icon-arrow-up icon-white"></i> 위첨자</button>
-				<button class="btn btn-primary" ng-click="setFormat('subscript');"><i class="icon-arrow-down icon-white"></i> 아래첨자</button>
-				<button class="btn btn-warning" ng-click="setFormat('removeFormat')"><i class="icon-remove icon-white"></i> 태그 제거</button>
-			</div>
-			
-			<div class="btn-group">
-				<button class="btn btn-primary" ng-click="setFormat('insertorderedlist');"><i class="icon-list icon-white"></i> 순번 목록</button>
-				<button class="btn btn-primary" ng-click="setFormat('insertunorderedlist');"><i class="icon-list icon-white"></i> 무순번 목록</button>
-			</div>
-			
-			<div class="btn-group">
-				<button class="btn btn-primary" ng-click="setFormat('outdent'); setFormat('indent');"><i class="icon-indent-left icon-white"></i> 들여쓰기</button>
-				<button class="btn btn-warning" ng-click="setFormat('outdent');"><i class="icon-remove icon-white"></i> 들여쓰기 취소</button>
-			</div>
-			
-			<div class="btn-group">		
-				<button class="btn btn-danger" ng-click="init();"><i class="icon-file icon-white"></i> 초기화</button>
-			</div>
-			
-			<span class="badge">for my cute girl</span>
-		</div>
-		
-		<blockquote>
-			<p><strong>내용 입력</strong></p>
-			<small>여기에 입력하면 아래 <b>변환 결과</b>에 태그가 적용됩니다. Ctrl + B 로 '굵게', Ctrl + I 로 '이탤릭' 을 쉽게 설정할 수 있습니다.</small>
-		</blockquote>
-		<div id="contentEditor" contentEditable="true" ng-model="content"></div> 
-		
-		<blockquote>
-			<p><strong>변환 결과</strong></p>
-			<small>클릭하면 복사하기 쉽도록 전체 선택이 됩니다.</small>
-		</blockquote>
-		<textarea onclick="this.select();" ng-model="converted"></textarea>
+    <div ng-app="directive" ng-controller="ctrl"> 
+
+        <!-- 메뉴 버튼 영역 -->
+        <div>
+            <div class="btn-group">
+                <button class="btn btn-primary" ng-click="setFormat('bold');"><i class="icon-bold icon-white"></i> 굵게</button>
+                <button class="btn btn-primary" ng-click="setFormat('italic');"><i class="icon-italic icon-white"></i> 이탤릭</button>
+                <button class="btn btn-primary" ng-click="setFormat('superscript');"><i class="icon-arrow-up icon-white"></i> 위첨자</button>
+                <button class="btn btn-primary" ng-click="setFormat('subscript');"><i class="icon-arrow-down icon-white"></i> 아래첨자</button>
+                <button class="btn btn-warning" ng-click="setFormat('removeFormat')"><i class="icon-remove icon-white"></i> 태그 제거</button>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" ng-click="setFormat('insertorderedlist');"><i class="icon-list icon-white"></i> 순번 목록</button>
+                <button class="btn btn-primary" ng-click="setFormat('insertunorderedlist');"><i class="icon-list icon-white"></i> 무순번 목록</button>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" ng-click="setFormat('outdent'); setFormat('indent');"><i class="icon-indent-left icon-white"></i> 들여쓰기</button>
+                <button class="btn btn-warning" ng-click="setFormat('outdent');"><i class="icon-remove icon-white"></i> 들여쓰기 취소</button>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-danger" ng-click="init();"><i class="icon-file icon-white"></i> 초기화</button>
+            </div>
+            
+            <span class="badge">for my cute girl</span>
+        </div>
+        
+
+        <!-- 내용 입력 영역 -->
+        <blockquote>
+            <p><strong>내용 입력</strong></p>
+            <small>여기에 입력하면 아래 <b>변환 결과</b>에 태그가 적용됩니다. Ctrl + B 로 '굵게', Ctrl + I 로 '이탤릭' 을 쉽게 설정할 수 있습니다.</small>
+        </blockquote>
+        <div id="contentEditor" contentEditable="true" ng-model="content"></div> 
+        
+
+        <!-- 변환 결과 영역 -->
+        <blockquote>
+            <p><strong>변환 결과</strong></p>
+            <small>클릭하면 복사하기 쉽도록 전체 선택이 됩니다.</small>
+        </blockquote>
+        <textarea id="contentViewer" onclick="this.select();" ng-model="customized"></textarea>
+        
+
+        <!-- 원본 HTML 소스 영역 -->
+        <blockquote>
+          <p><b>원본 HTML</b></p>
+          <small>입력한 내용의 원본 HTML 소스입니다.</small>
+        </blockquote>   
+        <pre>{{content}}</pre>
+
     </div>
 </body>
 
