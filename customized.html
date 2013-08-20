@@ -19,7 +19,7 @@
 			background-color: #f0f0f0;
 			padding: 10px;
 			outline-style: none;
-			height: 200px;
+			height: 250px;
 			margin: 10px 0 50px 0;
 			overflow-y: auto;
 			font-size: 12px !important;
@@ -42,7 +42,7 @@
 			border-radius: 0;
 			padding: 10px;
 			outline-style: none;
-			height: 250px;
+			height: 300px;
 			margin: 10px 0 20px 0;
 			overflow-y: auto;
 			font-size: 12px !important;
@@ -378,15 +378,13 @@ angular.module('directive', [])
 			<div class="btn-group">
 				<button class="btn btn-danger" ng-click="init();"><i class="icon-file icon-white"></i> 초기화</button>
 			</div>
-			
-			<span class="badge">for my cute girl</span>
 		</div>
 		
 
 		<!-- 내용 입력 영역 -->
 		<blockquote>
 			<p><strong>내용 입력</strong></p>
-			<small>여기에 입력하면 아래 <b>변환 결과</b>에 태그가 적용됩니다. Ctrl + B 로 '굵게', Ctrl + I 로 '이탤릭' 을 쉽게 설정할 수 있습니다.</small>
+			<small>여기에 입력하면 아래 <b>변환 결과</b>에 태그가 적용돼요! Ctrl + B 로 '굵게', Ctrl + I 로 '이탤릭' 을 쉽게 적용할수도 있구!</small>
 		</blockquote>
 		<div id="contentEditor" contentEditable="true" ng-model="content"></div> 
 		
@@ -394,17 +392,9 @@ angular.module('directive', [])
 		<!-- 변환 결과 영역 -->
 		<blockquote>
 			<p><strong>변환 결과</strong></p>
-			<small>클릭하면 복사하기 쉽도록 전체 선택이 됩니다.</small>
+			<small>클릭하면 복사하기 쉽도록 전체 선택이 돼요!</small>
 		</blockquote>
 		<textarea id="contentViewer" onclick="this.select();" ng-model="customized"></textarea>
-		
-
-		<!-- 원본 HTML 소스 영역 -->
-		<blockquote>
-		  <p><b>원본 HTML</b></p>
-		  <small>입력한 내용의 원본 HTML 소스입니다.</small>
-		</blockquote>   
-		<pre>{{content}}</pre>
 
 	</div>
 </body>
